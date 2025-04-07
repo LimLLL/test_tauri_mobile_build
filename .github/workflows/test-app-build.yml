@@ -51,7 +51,7 @@ jobs:
             - name: Build app bundle
               run: |
                 pnpm tauri android init
-                pnpm tauri android build --target aarch64 -v
+                pnpm tauri android build --target aarch64
               env:
                   NDK_HOME: ${{ env.ANDROID_HOME }}/ndk/27.0.11902837
             - name: Extract android signing key from env
