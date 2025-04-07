@@ -35,7 +35,6 @@ jobs:
               run: pnpm install
             - name: Build app bundle
               run: |
-                # init android
                 tauri android init
                 pnpm tauri android build -v
               env:
