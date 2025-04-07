@@ -33,6 +33,11 @@ jobs:
                   targets: aarch64-linux-android,armv7-linux-androideabi,i686-linux-android,x86_64-linux-android
             - name: Install dependencies
               run: pnpm install
+            - name: Rust cache
+              uses: swatinem/rust-cache@v2
+              with:
+                workspaces: './src-tauri -> target'
+                key: rust-cache-${{ runner.os }}-build
             - name: Build app bundle
               run: |
                 pnpm tauri android init
