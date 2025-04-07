@@ -3,6 +3,9 @@ import reactLogo from "./assets/react.svg";
 import {invoke} from "@tauri-apps/api/core";
 import "./App.css";
 import {checkPermissions, getCurrentPosition, requestPermissions} from '@tauri-apps/plugin-geolocation'
+import VConsole from "vconsole";
+
+const vConsole = new VConsole({ theme: 'dark' });
 
 async function getLocation() {
   let permissions = await checkPermissions()
@@ -66,6 +69,8 @@ function App() {
       <button
         onClick={async () => {
           const location = await getLocation()
+          console.log(location)
+          console.log(await checkPermissions())
           setLocation(location)
           alert(JSON.stringify(location))
         } }
