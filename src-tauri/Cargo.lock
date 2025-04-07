@@ -3633,6 +3633,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "tauri-plugin-geolocation"
+version = "2.2.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f70978d3dbca4d900f8708dad1e0cff32c52de578101998d0f30dc7e12104e85"
+dependencies = [
+ "log",
+ "serde",
+ "serde_json",
+ "tauri",
+ "tauri-plugin",
+ "thiserror 2.0.12",
+]
+
+[[package]]
 name = "tauri-plugin-opener"
 version = "2.2.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3781,6 +3795,7 @@ dependencies = [
  "serde_json",
  "tauri",
  "tauri-build",
+ "tauri-plugin-geolocation",
  "tauri-plugin-opener",
 ]
 

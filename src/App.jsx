@@ -1,11 +1,28 @@
-import { useState } from "react";
+import {useState} from "react";
 import reactLogo from "./assets/react.svg";
-import { invoke } from "@tauri-apps/api/core";
+import {invoke} from "@tauri-apps/api/core";
 import "./App.css";
+import {checkPermissions, getCurrentPosition, requestPermissions} from '@tauri-apps/plugin-geolocation'
+
+async function getLocation() {
+  let permissions = await checkPermissions()
+  if (
+    permissions.location === 'prompt'
+    || permissions.location === 'prompt-with-rationale'
+  ) {
+    permissions = await requestPermissions(['location'])
+  }
+
+  if (permissions.location === 'granted') {
+    return await getCurrentPosition().then(res => res)
+  }
+}
+
 
 function App() {
   const [greetMsg, setGreetMsg] = useState("");
   const [name, setName] = useState("");
+  const [location, setLocation] = useState({});
 
   async function greet() {
     // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
@@ -44,6 +61,30 @@ function App() {
         <button type="submit">Greet</button>
       </form>
       <p>{greetMsg}</p>
+      <br/>
+
+      <button
+        onClick={async () => {
+          const location = await getLocation()
+          setLocation(location)
+          alert(JSON.stringify(location))
+        } }
+        className="btn"
+      >
+        Get User Location
+      </button>
+
+      <p>
+        {
+          JSON.stringify(location)
+            .replaceAll('{', '{\n')
+            .replaceAll('}', '\n}')
+            .replaceAll(',', ',\n')
+            .replaceAll(':', ': ')
+            .replaceAll('"', '')
+        }
+      </p>
+
     </main>
   );
 }
