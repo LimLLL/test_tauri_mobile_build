@@ -11,6 +11,16 @@ jobs:
             contents: write
         steps:
             - uses: actions/checkout@v4
+            - name: Cache Gradle packages
+              uses: actions/cache@v4
+              with:
+                path: |
+                  ~/.gradle/caches
+                  ~/.gradle/wrapper
+                key: ${{ runner.os }}-gradle-${{ hashFiles('**/gradle-wrapper.properties') }}-${{ hashFiles('**/*.gradle*') }}
+                restore-keys: |
+                  ${{ runner.os }}-gradle-
+
             - uses: pnpm/action-setup@v4
               with:
                   version: 8
@@ -61,7 +71,7 @@ jobs:
               uses: martinbeentjes/npm-get-version-action@v1.3.1
             - name: Rename APK file
               run: |
-                  mv ./src-tauri/gen/android/app/build/outputs/apk/universal/release/app-universal-release-signed.apk ./src-tauri/gen/android/app/build/outputs/apk/universal/release/myappliation-${{ steps.package-version.outputs.current-version}}.apk
+                  mv ./src-tauri/gen/android/app/build/outputs/apk/universal/release/app-universal-release-signed.apk ./src-tauri/gen/android/app/build/outputs/apk/universal/release/myapplication-${{ steps.package-version.outputs.current-version}}.apk
             - name: Publish
               uses: softprops/action-gh-release@v1
               with:
