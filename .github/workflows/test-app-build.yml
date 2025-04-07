@@ -35,13 +35,6 @@ jobs:
               run: pnpm install
             - name: Build app bundle
               run: |
-
-#                > test_tauri_mobile_build@0.1.0 tauri /home/runner/work/test_tauri_mobile_build/test_tauri_mobile_build
-#> tauri "android" "build" "-v"
-#       Debug [tauri_cli::helpers::app_paths] Found Tauri project inside /home/runner/work/test_tauri_mobile_build/test_tauri_mobile_build/src-tauri on early lookup
-#Android Studio project directory /home/runner/work/test_tauri_mobile_build/test_tauri_mobile_build/src-tauri/gen/android doesn't exist. Please run `tauri android init` and try again.
-#       Error [tauri_cli_node] Android Studio project directory /home/runner/work/test_tauri_mobile_build/test_tauri_mobile_build/src-tauri/gen/android doesn't exist. Please run `tauri android init` and try again.
-# ELIFECYCLE  Command failed with exit code 1.
                 # init android
                 tauri android init
                 pnpm tauri android build -v
