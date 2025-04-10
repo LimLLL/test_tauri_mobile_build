@@ -2,24 +2,25 @@ import {useState} from "react";
 import reactLogo from "./assets/react.svg";
 import {invoke} from "@tauri-apps/api/core";
 import "./App.css";
-import {checkPermissions, getCurrentPosition, requestPermissions} from '@tauri-apps/plugin-geolocation'
+// import {checkPermissions, getCurrentPosition, requestPermissions} from '@tauri-apps/plugin-geolocation'
 import VConsole from "vconsole";
+import { Map, APILoader, ScaleControl, ToolBarControl, ControlBarControl, Geolocation } from '@uiw/react-amap';
 
 const vConsole = new VConsole({ theme: 'dark' });
 
-async function getLocation() {
-  let permissions = await checkPermissions()
-  if (
-    permissions.location === 'prompt'
-    || permissions.location === 'prompt-with-rationale'
-  ) {
-    permissions = await requestPermissions(['location'])
-  }
-
-  if (permissions.location === 'granted') {
-    return await getCurrentPosition().then(res => res)
-  }
-}
+// async function getLocation() {
+//   let permissions = await checkPermissions()
+//   if (
+//     permissions.location === 'prompt'
+//     || permissions.location === 'prompt-with-rationale'
+//   ) {
+//     permissions = await requestPermissions(['location'])
+//   }
+//
+//   if (permissions.location === 'granted') {
+//     return await getCurrentPosition().then(res => res)
+//   }
+// }
 
 
 function App() {
@@ -66,29 +67,45 @@ function App() {
       <p>{greetMsg}</p>
       <br/>
 
-      <button
-        onClick={async () => {
-          const location = await getLocation()
-          console.log(location)
-          console.log(await checkPermissions())
-          setLocation(location)
-          alert(JSON.stringify(location))
-        } }
-        className="btn"
-      >
-        Get User Location
-      </button>
+      <APILoader akey={'121d0d8da90c335b09729991efaa8b20'}>
+        <Map style={{height: 300}} zoom={10}>
+          <ScaleControl offset={[16, 30]} position="LB" />
+          <ToolBarControl offset={[16, 10]} position="RB" />
+          <ControlBarControl offset={[16, 180]} position="RB" />
+          <Geolocation
+            maximumAge={100000}
+            borderRadius="5px"
+            position="RB"
+            offset={[16, 80]}
+            zoomToAccuracy={true}
+            showCircle={true}
+          />
+        </Map>
+      </APILoader>
 
-      <p>
-        {
-          JSON.stringify(location)
-            .replaceAll('{', '{\n')
-            .replaceAll('}', '\n}')
-            .replaceAll(',', ',\n')
-            .replaceAll(':', ': ')
-            .replaceAll('"', '')
-        }
-      </p>
+      {/*<button*/}
+      {/*  onClick={async () => {*/}
+      {/*    const location = await getLocation()*/}
+      {/*    console.log(location)*/}
+      {/*    console.log(await checkPermissions())*/}
+      {/*    setLocation(location)*/}
+      {/*    alert(JSON.stringify(location))*/}
+      {/*  } }*/}
+      {/*  className="btn"*/}
+      {/*>*/}
+      {/*  Get User Location*/}
+      {/*</button>*/}
+
+      {/*<p>*/}
+      {/*  {*/}
+      {/*    JSON.stringify(location)*/}
+      {/*      .replaceAll('{', '{\n')*/}
+      {/*      .replaceAll('}', '\n}')*/}
+      {/*      .replaceAll(',', ',\n')*/}
+      {/*      .replaceAll(':', ': ')*/}
+      {/*      .replaceAll('"', '')*/}
+      {/*  }*/}
+      {/*</p>*/}
 
     </main>
   );
