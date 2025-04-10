@@ -77,7 +77,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: android-apk # Name of the artifact collection
-          path: ./myapplication-v${{ steps.package-version.outputs.current-version}}.apk # Path to the single renamed file
+          path: ./src-tauri/gen/android/app/build/outputs/apk/universal/release/myapplication-${{ steps.package-version.outputs.current-version}}.apk # Path to the single renamed file
           if-no-files-found: error # Optional: Treat error if the file is missing
           retention-days: 1 # Optional: How long to keep the artifact (default is 90)
     #            - name: Publish
